@@ -21,6 +21,7 @@ abstract final class AppTheme {
       titleMedium: AppTextStyles.titleMedium,
       bodyMedium: AppTextStyles.bodyMedium,
       bodySmall: AppTextStyles.bodySmall,
+      labelSmall: AppTextStyles.labelSmall,
     ),
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.warmWhite,
@@ -39,15 +40,15 @@ abstract final class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.violet,
+        backgroundColor: AppColors.deepViolet,
         foregroundColor: AppColors.white,
-        minimumSize: const Size(0, 48),
+        minimumSize: const Size(0, 56),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         elevation: 0,
-        textStyle: AppTextStyles.bodyMedium.copyWith(
+        textStyle: AppTextStyles.bodySmall.copyWith(
           fontWeight: FontWeight.w600,
         ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
     ),
     textButtonTheme: TextButtonThemeData(

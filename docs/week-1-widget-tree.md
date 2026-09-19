@@ -22,15 +22,14 @@ main() → runApp() → MovieLogApp
                ├─ ProfileHeader → Column
                │  ├─ ClipOval → Image.asset (없으면 CircleAvatar → Icon)
                │  ├─ Text: 무비러버
-               │  ├─ Text: 소개
-               │  └─ SvgPicture.asset: 영화 아이콘
+               │  └─ Text: 소개
+               ├─ Center → EditProfileButton → TextButton
                ├─ ProfileStats → Row (spaceBetween / start)
                │  └─ Expanded → StatItem × 3
-               │     └─ Container → Column → Text: 값, Text: 항목
-               ├─ FavoriteGenres → Column (start)
-               │  ├─ Text: 선호 장르
-               │  └─ Wrap → Chip × 3
-               └─ EditProfileButton → ElevatedButton
+               │     └─ Container → Column → Row: SVG + 항목명, Text: 값
+               └─ FavoriteGenres → Column (start)
+                  ├─ Text: 선호하는 장르
+                  └─ Wrap → Chip × 3
 ```
 
 두 화면이 동시에 home에 들어가는 것은 아닙니다. 시작 화면과 프로필 화면 중 하나를 선택해서 실행합니다.
@@ -42,4 +41,4 @@ main() → runApp() → MovieLogApp
 - Expanded로 통계 카드 너비를 나누고 Wrap으로 장르 줄바꿈을 허용합니다.
 - Theme.of(context)는 해당 위치에서 가장 가까운 상위 Theme를 찾습니다.
 - ElevatedButton은 주요 동작을 강조합니다. TextButton은 보조 동작에 적합합니다.
-- PNG는 비트맵 이미지, SVG는 크기를 바꾸어도 선명한 로고·아이콘에 사용합니다.
+- JPG·PNG는 비트맵 이미지, SVG는 크기를 바꾸어도 선명한 로고·아이콘에 사용합니다.

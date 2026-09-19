@@ -12,10 +12,10 @@ class StartScreen extends StatelessWidget {
     body: SafeArea(
       child: LayoutBuilder(
         builder: (context, constraints) => SingleChildScrollView(
-          padding: const EdgeInsets.all(32),
+          padding: const EdgeInsets.fromLTRB(32, 32, 32, 56),
           child: ConstrainedBox(
             constraints: BoxConstraints(
-              minHeight: (constraints.maxHeight - 64).clamp(0, double.infinity),
+              minHeight: (constraints.maxHeight - 88).clamp(0, double.infinity),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -26,9 +26,9 @@ class StartScreen extends StatelessWidget {
                     const SizedBox(height: 32),
                     Text(
                       'FLUTTER 1주차',
-                      style: Theme.of(context).textTheme.bodySmall,
+                      style: Theme.of(context).textTheme.labelSmall,
                     ),
-                    const SizedBox(height: 64),
+                    const SizedBox(height: 56),
                     if (useLogo)
                       SvgPicture.asset(
                         'assets/logos/movielog_logo.svg',
@@ -42,13 +42,13 @@ class StartScreen extends StatelessWidget {
                         size: 72,
                         color: AppColors.violet,
                       ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 56),
                     Text(
                       '영화의 순간을\n기록하세요',
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 8),
                     Text(
                       '보고 싶은 영화부터 나만의 평점까지\n한곳에서 관리해요',
                       textAlign: TextAlign.center,

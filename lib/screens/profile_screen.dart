@@ -17,17 +17,17 @@ class ProfileBody extends StatelessWidget {
   const ProfileBody({super.key});
   @override
   Widget build(BuildContext context) => const SingleChildScrollView(
-    padding: EdgeInsets.all(24),
+    padding: EdgeInsets.fromLTRB(16, 32, 16, 24),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ProfileHeader(),
+        SizedBox(height: 24),
+        Center(child: EditProfileButton()),
         SizedBox(height: 32),
         ProfileStats(),
         SizedBox(height: 32),
         FavoriteGenres(),
-        SizedBox(height: 40),
-        EditProfileButton(),
       ],
     ),
   );
@@ -36,31 +36,37 @@ class ProfileBody extends StatelessWidget {
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({
     super.key,
-    this.imagePath = 'assets/images/profile.png',
+    this.imagePath = 'assets/images/profile/profile_movielog.jpg',
   });
   final String? imagePath;
   @override
   Widget build(BuildContext context) {
     const fallback = CircleAvatar(
-      radius: 44,
+      radius: 62,
       backgroundColor: AppColors.white,
       child: Icon(Icons.person, size: 48, color: AppColors.violet),
     );
     return Column(
       children: [
-        if (imagePath == null)
-          fallback
-        else
-          ClipOval(
-            child: Image.asset(
-              imagePath!,
-              width: 88,
-              height: 88,
-              fit: BoxFit.cover,
-              semanticLabel: '프로필 이미지',
-              errorBuilder: (context, error, stackTrace) => fallback,
-            ),
+        Container(
+          padding: const EdgeInsets.all(2),
+          decoration: const BoxDecoration(
+            color: AppColors.paleViolet,
+            shape: BoxShape.circle,
           ),
+          child: imagePath == null
+              ? fallback
+              : ClipOval(
+                  child: Image.asset(
+                    imagePath!,
+                    width: 124,
+                    height: 124,
+                    fit: BoxFit.cover,
+                    semanticLabel: '프로필 이미지',
+                    errorBuilder: (context, error, stackTrace) => fallback,
+                  ),
+                ),
+        ),
         const SizedBox(height: 16),
         Text(
           '무비러버',
@@ -70,20 +76,10 @@ class ProfileHeader extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          '좋아하는 영화를 기록하고 있어요',
-          style: Theme.of(context).textTheme.bodySmall,
+          '매주 주말엔 영화관으로 출근하는 프로 관람객. 좋은 영화를 보고 기록하는 것을 좋아합니다.',
+          style: Theme.of(context).textTheme.bodyMedium
+              ?.copyWith(color: AppColors.secondaryText),
           textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 16),
-        SvgPicture.asset(
-          'assets/icons/movie.svg',
-          width: 24,
-          height: 24,
-          colorFilter: ColorFilter.mode(
-            Theme.of(context).colorScheme.primary,
-            BlendMode.srcIn,
-          ),
-          semanticsLabel: '영화 아이콘',
         ),
       ],
     );
@@ -99,18 +95,24 @@ class ProfileStat {
 class ProfileStats extends StatelessWidget {
   const ProfileStats({super.key});
   static const stats = [
-    ProfileStat('본 영화', '24'),
-    ProfileStat('평점', '18'),
-    ProfileStat('즐겨찾기', '7'),
+    ProfileStat('본 영화', '342'),
+    ProfileStat('평점', '4.2'),
+    ProfileStat('즐겨찾기', '58'),
   ];
   @override
   Widget build(BuildContext context) => Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: stats
+        .asMap()
+        .entries
         .map(
-          (stat) => Expanded(
-            child: StatItem(label: stat.label, value: stat.value),
+          (entry) => Expanded(
+            child: StatItem(
+              label: entry.value.label,
+              value: entry.value.value,
+              rightMargin: entry.key == stats.length - 1 ? 0 : 8,
+            ),
           ),
         )
         .toList(),
@@ -118,30 +120,56 @@ class ProfileStats extends StatelessWidget {
 }
 
 class StatItem extends StatelessWidget {
-  const StatItem({super.key, required this.label, required this.value});
+  const StatItem({
+    super.key,
+    required this.label,
+    required this.value,
+    this.rightMargin = 0,
+  });
   final String label;
   final String value;
+  final double rightMargin;
   @override
   Widget build(BuildContext context) => Container(
-    margin: const EdgeInsets.symmetric(horizontal: 4),
+    margin: EdgeInsets.only(right: rightMargin),
     padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 16),
     decoration: BoxDecoration(
-      color: AppColors.warmWhite,
-      border: Border.all(color: AppColors.violet),
-      borderRadius: BorderRadius.circular(8),
+      color: AppColors.cardSurface,
+      border: Border.all(color: AppColors.paleViolet),
+      borderRadius: BorderRadius.circular(12),
     ),
     child: Column(
       children: [
-        Text(
-          value,
-          style: Theme.of(context).textTheme.titleLarge
-              ?.copyWith(color: AppColors.violet),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (label == '본 영화') ...[
+              SvgPicture.asset(
+                'assets/icons/movie.svg',
+                width: 12,
+                height: 12,
+                colorFilter: ColorFilter.mode(
+                  Theme.of(context).colorScheme.primary,
+                  BlendMode.srcIn,
+                ),
+                semanticsLabel: '영화 아이콘',
+              ),
+              const SizedBox(width: 4),
+            ],
+            Flexible(
+              child: Text(
+                label,
+                style: Theme.of(context).textTheme.labelSmall,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 4),
         Text(
-          label,
-          style: Theme.of(context).textTheme.bodySmall,
-          textAlign: TextAlign.center,
+          value,
+          style: Theme.of(context).textTheme.titleLarge
+              ?.copyWith(color: AppColors.deepViolet, fontSize: 22),
         ),
       ],
     ),
@@ -155,7 +183,7 @@ class FavoriteGenres extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text('선호 장르', style: Theme.of(context).textTheme.titleMedium),
+      Text('선호하는 장르', style: Theme.of(context).textTheme.bodyMedium),
       const SizedBox(height: 16),
       Wrap(
         spacing: 8,
@@ -163,11 +191,19 @@ class FavoriteGenres extends StatelessWidget {
         children: genres
             .map(
               (genre) => Chip(
-                label: Text(genre),
-                backgroundColor: AppColors.warmWhite,
-                side: const BorderSide(color: AppColors.violet),
+                label: Text(
+                  genre,
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                    color: AppColors.deepViolet,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                backgroundColor: AppColors.paleViolet,
+                side: BorderSide.none,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(20),
                 ),
               ),
             )
@@ -180,6 +216,14 @@ class FavoriteGenres extends StatelessWidget {
 class EditProfileButton extends StatelessWidget {
   const EditProfileButton({super.key});
   @override
-  Widget build(BuildContext context) =>
-      ElevatedButton(onPressed: () {}, child: const Text('프로필 수정'));
+  Widget build(BuildContext context) => TextButton(
+    onPressed: () {},
+    style: TextButton.styleFrom(
+      minimumSize: const Size(128, 42),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      side: const BorderSide(color: AppColors.violet),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+    ),
+    child: const Text('프로필 수정'),
+  );
 }

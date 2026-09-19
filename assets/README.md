@@ -1,12 +1,13 @@
-# 에셋 출처 및 교체 상태
+# 에셋 출처
 
-공통 워크북 ZIP과 Figma 링크가 제공되지 않아 아래 이미지는 임시입니다.
+사용자가 제공한 MovieLog Flutter Asset Pack에서 1주차 파일을 원래 경로대로 가져왔습니다.
 
-- `logos/movielog_logo.svg`: 학습용으로 직접 작성한 임시 영화 로고. 공식 MovieLog 로고가 아닙니다.
-- `icons/movie.svg`: 직접 작성한 단색 영화 아이콘.
-- `images/profile.png`: 기존 프로젝트의 Flutter 웹 아이콘을 복사한 임시 비트맵. 공통 자료의 프로필 이미지로 교체해야 합니다.
-- `fonts/Manrope-VariableFont_wght.ttf`: Google Fonts의 Manrope 가변 폰트. 원본 파일 `Manrope[wght].ttf`를 워크북 경로에 맞게 이름 변경했습니다.
-  - 출처: https://github.com/google/fonts/tree/main/ofl/manrope
-  - 라이선스: `fonts/OFL.txt`
+- `logos/movielog_logo.svg`: 공통 MovieLog 클래퍼보드 로고
+- `icons/movie.svg`: Google Material Symbols 영화 아이콘
+- `images/profile/profile_movielog.jpg`: 공통 프로필 사진
+- `fonts/Manrope-VariableFont_wght.ttf`: 공통 Manrope 가변 폰트
 
-공통 ZIP을 받으면 해당 경로의 파일을 교체하고 `flutter pub get` 후 완전히 재실행합니다.
+원본 출처 고지: [ASSET-NOTICE.md](ASSET-NOTICE.md)
+라이선스: [Manrope OFL](licenses/Manrope-OFL.txt), [Material Symbols Apache 2.0](licenses/Material-Symbols-Apache-2.0.txt)
+
+프로필 이미지는 제공된 고지에 따라 워크북 실습 목적으로 사용합니다. 2~3주차용 포스터와 미사용 아이콘은 이번 변경에 포함하지 않았습니다.
