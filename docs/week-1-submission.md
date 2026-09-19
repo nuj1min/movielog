@@ -17,7 +17,7 @@
 ```text
 이름 / 닉네임: [본인 이름 / 닉네임]
 GitHub 저장소: https://github.com/nuj1min/movielog
-Pull Request: [아래 PR 링크 참고]
+Pull Request: https://github.com/nuj1min/movielog/pull/2 (공식 에셋 및 Figma 비교 대기 중인 초안)
 시작 화면 기본 Icon 적용 캡처: week-1-start-icon.png 첨부
 시작 화면 로고 교체 캡처: week-1-start-logo.png 첨부 (현재 임시 로고)
 프로필 완성 화면 캡처: week-1-profile.png 첨부 (현재 임시 이미지, Figma 비교 전)
