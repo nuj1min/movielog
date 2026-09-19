@@ -1,23 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:movielog/main.dart';
+import 'package:movielog/movie_log_app.dart';
+import 'package:movielog/screens/profile_screen.dart';
+import 'package:movielog/screens/start_screen.dart';
 
 void main() {
-  testWidgets('시작 화면과 시작하기 버튼의 안내 메시지를 확인한다', (tester) async {
-    tester.view.physicalSize = const Size(390, 884);
-    tester.view.devicePixelRatio = 1;
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
-
-    await tester.pumpWidget(const MyApp());
-    expect(find.text('FLUTTER 0주차'), findsOneWidget);
-    expect(find.text('영화의 순간을\n기록하세요'), findsOneWidget);
-    expect(find.byIcon(Icons.movie_outlined), findsOneWidget);
-    expect(tester.takeException(), isNull);
-
-    await tester.tap(find.widgetWithText(ElevatedButton, '시작하기'));
+  for (final size in [const Size(390, 884), const Size(320, 568)]) {
+    testWidgets('시작/프로필 화면의 에셋과 배치 확인: $size', (tester) async {
+      tester.view.physicalSize = size;
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      await tester.pumpWidget(const MovieLogApp());
+      await tester.pumpAndSettle();
+      expect(find.text('FLUTTER 1주차'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+      await tester.ensureVisible(find.text('시작하기'));
+      await tester.tap(find.text('시작하기'));
+      await tester.pumpAndSettle();
+      expect(find.byType(SnackBar), findsNothing);
+      expect(find.byType(StartScreen), findsOneWidget);
+      await tester.pumpWidget(const MovieLogApp(home: ProfileScreen()));
+      await tester.pumpAndSettle();
+      expect(find.byType(StatItem), findsNWidgets(3));
+      expect(find.byType(Chip), findsNWidgets(3));
+      expect(find.text('무비러버'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+      await tester.ensureVisible(find.text('프로필 수정'));
+      await tester.tap(find.text('프로필 수정'));
+      await tester.pumpAndSettle();
+      expect(find.byType(ProfileScreen), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
+  }
+  testWidgets('프로필 이미지가 없으면 기본 아이콘 표시', (tester) async {
+    await tester.pumpWidget(
+      const MovieLogApp(home: Scaffold(body: ProfileHeader(imagePath: null))),
+    );
     await tester.pumpAndSettle();
-    expect(find.text('시작하기 버튼을 눌렀어요!'), findsOneWidget);
+    expect(find.byIcon(Icons.person), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }
