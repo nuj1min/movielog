@@ -19,7 +19,7 @@
 ```text
 이름 / 닉네임: 김민준 / 야르
 GitHub 저장소: https://github.com/nuj1min/movielog
-Pull Request: [PR 생성 후 반영]
+Pull Request: https://github.com/nuj1min/movielog/pull/3
 입력 전 화면: week-2-empty.png 첨부
 Validation 오류 화면: week-2-validation.png 첨부
 입력 완료 화면: week-2-valid.png 첨부
